@@ -52,7 +52,7 @@ python main.py --seed 777 --test False
 ```
 You can change the size of the training set by modifying the partition range in `NAS-Bench-101/loader.py`.
 
-- To evaluate BMSR’s overall Kendall’s Tau and to search for high-performing architectures on NAS-Bench-101, you can run:
+- To evaluate BMSR’s overall Kendall’s Tau and to search for high-performing architectures in NAS-Bench-101, you can run:
 ```
 cd NAS-Bench-101
 python main.py --seed 777 --test True
@@ -66,9 +66,30 @@ python main.py --seed 777 --test False --data_name 'cifar10'
 ```
 You can change the size of the training set by modifying the partition range in `NAS-Bench-102/loader.py`.
 
-- To evaluate BMSR’s overall Kendall’s Tau and to search for high-performing architectures on NAS-Bench-201, you can run:
+- To evaluate BMSR’s overall Kendall’s Tau and to search for high-performing architectures in NAS-Bench-201, you can run:
 ```
 cd NAS-Bench-201
 python main.py --seed 777 --test True --data_name 'cifar10'
 ```
 Where `data_name` can be replaced with `'cifar100'` or `'imagenet16'` as needed.
+
+## DARTS
+
+- To train BMSR using DARTS, you can run:
+```
+cd DARTS
+python main.py --seed 104729 --test False
+```
+
+- To search for high-performance architectures among 100k random architectures in DARTS, you can run:
+```
+cd DARTS
+python main.py --seed 104729 --test True
+```
+
+- To fully train the optimal architecture found in DARTS, you can run:
+```
+cd DARTS
+cd darts_test
+python train.py --seed 0
+```
