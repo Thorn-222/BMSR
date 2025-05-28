@@ -22,3 +22,18 @@ Dataset: https://storage.googleapis.com/nasbench/nasbench_only108.tfrecord
 
 After downloading, place the dataset under: `NAS-Bench-101/path`.
 Then simply run `NAS-Bench-101/main.py`, which will automatically generate the preprocessed data file:`tiny_nas_bench_101_test.pkl` before training.
+
+**NAS-Bench-201:**
+
+Project: https://github.com/D-X-Y/NAS-Bench-201
+
+Dataset: https://drive.google.com/file/d/16Y0UwGisiouVRxW-W5hEtbxmcHw_0hF_/view
+
+After downloading, place the dataset under: `NAS-Bench-201/data`.
+Then run the preprocessing script `NAS-Bench-201/pth_2_npy.py` to generate:`nasbench201_dict_search.npy`.
+
+**DARTS:**
+
+We randomly selected 100 architectures from the DARTS search space and fully trained them to obtain accuracy labels.
+The preprocessed dataset file `darts_data.pkl` is already included in `DARTS/path` and can be used directly.
+
