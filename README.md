@@ -21,4 +21,4 @@ Project: https://github.com/google-research/nasbench
 Dataset: https://storage.googleapis.com/nasbench/nasbench_only108.tfrecord
 
 After downloading, place the dataset under: `NAS-Bench-101/path`.
-Then simply run `NAS-Bench-101/main.py`, which will automatically generate the preprocessed data file:`tiny_nas_bench_101_test.pkl before training`.
+Then simply run `NAS-Bench-101/main.py`, which will automatically generate the preprocessed data file:`tiny_nas_bench_101_test.pkl` before training.
