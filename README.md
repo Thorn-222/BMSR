@@ -45,14 +45,14 @@ After confirming that the data sets of each space are stored in the designated l
 
 ## NAS-Bench-101
 
-To train BMSR using NAS-Bench-101, you can run:
+·To train BMSR using NAS-Bench-101, you can run:
 ```
 cd NAS-Bench-101
 python main.py --seed 777 --test False
 ```
 You can change the size of the training set by modifying the partition range in `NAS-Bench-101/loader.py`.
 
-To evaluate BMSR’s overall Kendall’s Tau and to search for high-performing architectures on NAS-Bench-101, you can run:
+·To evaluate BMSR’s overall Kendall’s Tau and to search for high-performing architectures on NAS-Bench-101, you can run:
 ```
 cd NAS-Bench-101
 python main.py --seed 777 --test True
