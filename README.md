@@ -57,3 +57,18 @@ You can change the size of the training set by modifying the partition range in 
 cd NAS-Bench-101
 python main.py --seed 777 --test True
 ```
+## NAS-Bench-201
+
+- To train BMSR using NAS-Bench-201, you can run:
+```
+cd NAS-Bench-201
+python main.py --seed 777 --test False --data_name 'cifar10'
+```
+You can change the size of the training set by modifying the partition range in `NAS-Bench-102/loader.py`.
+
+- To evaluate BMSR’s overall Kendall’s Tau and to search for high-performing architectures on NAS-Bench-201, you can run:
+```
+cd NAS-Bench-201
+python main.py --seed 777 --test True --data_name 'cifar10'
+```
+Where `data_name` can be replaced with `'cifar100'` or `'imagenet16'` as needed.
