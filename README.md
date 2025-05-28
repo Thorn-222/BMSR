@@ -2,7 +2,7 @@
 The implementation for BMSR：A Bidirectional Multi-hop Predictor with Structure-aware Ranking for NAS
 ![The overview of BMSR](./images/BMSR.png)
 ## Requirements
- <code>`
+ <code>
 - python == 3.8.20 
 - pyTorch == 2.4.1
 - torchvision == 0.19.1
