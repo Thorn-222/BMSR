@@ -42,3 +42,11 @@ The preprocessed dataset file `darts_data.pkl` is already included in `DARTS/pat
 ## How to use
 
 After confirming that the data sets of each space are stored in the designated location, training and testing are performed according to the following process.
+
+## NAS-Bench-101
+
+To train CAP using NAS-Bench-101, you can run:
+```
+cd NAS-Bench-101
+python main.py --seed 777 --test False
+```
