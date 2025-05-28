@@ -34,7 +34,7 @@ Then run the preprocessing script `NAS-Bench-201/pth_2_npy.py` to generate:`nasb
 
 **DARTS:**
 
-Project:https://github.com/quark0/darts
+Project: https://github.com/quark0/darts
 
 We randomly selected 100 architectures from the DARTS search space and fully trained them to obtain accuracy labels.
 The preprocessed dataset file `darts_data.pkl` is already included in `DARTS/path` and can be used directly.
