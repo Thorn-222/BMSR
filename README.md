@@ -39,3 +39,6 @@ Project: https://github.com/quark0/darts
 We randomly selected 100 architectures from the DARTS search space and fully trained them to obtain accuracy labels.
 The preprocessed dataset file `darts_data.pkl` is already included in `DARTS/path` and can be used directly.
 
+## How to use
+
+After confirming that the data sets of each space are stored in the designated location, training and testing are performed according to the following process.
