@@ -195,7 +195,7 @@ class Predictor:
 
     top3_archs = [all_archs[i] for i in top3_indices]
     print('top3_archs:',top3_archs)
-    # 训练架构得到性能
+    # Training architecture to get real performance
     #best_acc_list = train_each_darts(top3_archs)
     #print(f"Top3 acc:{best_acc_list[0]},{best_acc_list[1]},{best_acc_list[2]}")
 
