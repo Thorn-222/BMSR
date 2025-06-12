@@ -34,11 +34,11 @@ class StructAwareBPRLoss(nn.Module):
         self.lambda_struct = lambda_struct
 
     def forward(self, preds, targets, adj, ops):
-        # 原始 BPR 排序损失
+        # BPRLoss
         loss = BPRLoss()
         base_loss = loss(preds, targets)
 
-        # 结构相似性感知约束
+        # SructLoss
         B = preds.size(0)
         adj_flat = adj.view(B, -1).float()
         adj_sim = F.cosine_similarity(adj_flat.unsqueeze(1), adj_flat.unsqueeze(0), dim=-1)
@@ -57,11 +57,9 @@ class StructAwareBPRLoss(nn.Module):
         structure_penalty = (sim_matrix * diff_matrix).mean()
 
 
-        # 总损失
         total_loss = base_loss + self.lambda_struct * structure_penalty
         return total_loss
 
-#加权归一化
 def normalize_adj(adj):
     row_sum = adj.sum(dim=-1, keepdim=True)
     norm_adj = adj / (row_sum + 1e-6)
@@ -79,7 +77,6 @@ class DirectedMultiHopGCN_Enhanced(nn.Module):
         self.out_features = out_features
         self.k_hops = k_hops
 
-        # 每跳的正向、反向独立线性映射（W1/W2）
         self.forward_weights = nn.ModuleList([
             nn.Linear(in_features, out_features) for _ in range(k_hops)
         ])
@@ -87,7 +84,6 @@ class DirectedMultiHopGCN_Enhanced(nn.Module):
             nn.Linear(in_features, out_features) for _ in range(k_hops)
         ])
 
-        # 每跳的交互融合模块
         self.fusion_mlps = nn.ModuleList([
             nn.Sequential(
                 nn.Linear(out_features * 2, out_features),
@@ -95,10 +91,8 @@ class DirectedMultiHopGCN_Enhanced(nn.Module):
             ) for _ in range(k_hops)
         ])
 
-        # 每跳的注意力权重向量
         self.hop_attn = nn.Parameter(torch.randn(k_hops, out_features))
 
-        # 最终融合与归一化
         self.norm = nn.LayerNorm(out_features)
 
         self.reset_parameters()
@@ -128,29 +122,24 @@ class DirectedMultiHopGCN_Enhanced(nn.Module):
         adj_power_bwd = identity
 
         for k in range(self.k_hops):
-            # 更新邻接矩阵幂
             adj_power_fwd = torch.bmm(adj_power_fwd, adj) if k > 0 else adj
             norm_adj_fwd = self.normalize_adj(adj_power_fwd)
 
             adj_power_bwd = torch.bmm(adj_power_bwd, adj.transpose(1, 2)) if k > 0 else adj.transpose(1, 2)
             norm_adj_bwd = self.normalize_adj(adj_power_bwd)
 
-            # 正向、反向方向分离特征变换
             fwd_feat = self.forward_weights[k](x)
             fwd_feat = torch.bmm(norm_adj_fwd, fwd_feat)
 
             bwd_feat = self.backward_weights[k](x)
             bwd_feat = torch.bmm(norm_adj_bwd, bwd_feat)
 
-            # 正反向融合
             concat_feat = torch.cat([fwd_feat, bwd_feat], dim=-1)
             fused = self.fusion_mlps[k](concat_feat)
             hop_features.append(fused)
 
-        # 多跳特征堆叠：[B, k_hops, N, D]
         hop_stack = torch.stack(hop_features, dim=1)
 
-        # 每跳注意力：[B, k_hops, N]
         attn_scores = (hop_stack * self.hop_attn.view(1, self.k_hops, 1, self.out_features)).sum(dim=-1)
         attn_scores = F.softmax(attn_scores, dim=1).unsqueeze(-1)  # [B, k_hops, N, 1]
 
@@ -160,7 +149,6 @@ class DirectedMultiHopGCN_Enhanced(nn.Module):
 
     @staticmethod
     def normalize_adj(adj):
-        """对称归一化邻接矩阵"""
         batch_size = adj.size(0)
         eye = torch.eye(adj.size(1), device=adj.device).unsqueeze(0).expand(batch_size, -1, -1)
         adj = adj + eye
